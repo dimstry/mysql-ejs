@@ -1,9 +1,11 @@
 const express = require("express")
 const mysql = require("mysql")
+const BodyParser = require("body-parser")
 /* deklarasi yg di butuhkan */
 
 const app = express(); 
 /* deklarasi lagi karena express itu function */
+app.use(BodyParser.urlencoded({extended : true }))
 app.set("view engine", "ejs")
 app.set("views", "views") /*directory html nya dimana*/
 const db = mysql.createConnection({
@@ -17,16 +19,22 @@ const db = mysql.createConnection({
 db.connect((err) => {
   if (err) throw err
   console.log ('database connect...')
-  
+  // untuk get data
+  app.get("/",(req,res) => {
   const sql = "SELECT * FROM user"
   db.query(sql, (err, result) => {
     const users =JSON.parse(JSON.stringify(result));
-    console.log ("Hasil db ->", users)
-    app.get("/",(req,res) => {
     res.render("index", {users : users, title : "Dims Code"})
     })
   })
-  
+    // untuk insert data 
+    app.post("/tambah",(req,res) => {
+      const insertSql =`INSERT INTO user (nama,kelas) VALUES ('${req.body.nama}','${req.body.kelas}');`
+      db.query(insertSql, (err,result) => {
+        if(err) throw err
+        res.redirect("/");
+      })
+    })
 })
 /* ini untuk mengkoneksikan */
 

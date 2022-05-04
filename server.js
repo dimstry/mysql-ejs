@@ -4,7 +4,8 @@ const mysql = require("mysql")
 
 const app = express(); 
 /* deklarasi lagi karena express itu function */
-
+app.set("view engine", "ejs")
+app.set("views", "views") /*directory html nya dimana*/
 const db = mysql.createConnection({
   host : "127.0.0.1",
   database : "db_siswa",
@@ -22,7 +23,7 @@ db.connect((err) => {
     const users =JSON.parse(JSON.stringify(result));
     console.log ("Hasil db ->", users)
     app.get("/",(req,res) => {
-    res.send(users)
+    res.render("index", {users : users, title : "Dims Code"})
     })
   })
   

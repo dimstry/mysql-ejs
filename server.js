@@ -6,6 +6,8 @@ const BodyParser = require("body-parser")
 const app = express(); 
 /* deklarasi lagi karena express itu function */
 app.use(BodyParser.urlencoded({extended : true }))
+//untuk post form , supaya menangkap hasil input an
+
 app.set("view engine", "ejs")
 app.set("views", "views") /*directory html nya dimana*/
 const db = mysql.createConnection({

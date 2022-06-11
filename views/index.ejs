@@ -17,6 +17,7 @@
       <th scope="col">id</th>
       <th scope="col">nama</th>
       <th scope="col">kelas</th>
+      <th scope="col">Aksi</th>
     </tr>
   </thead>
   <tbody>
@@ -25,6 +26,10 @@
       <td><%= user.id_user%></td>
       <td><%= user.nama%></td>
       <td><%= user.kelas%></td>
+      <td>
+        <a href="/delate/<%= user.id_user %>" class="btn btn-danger badge">Hapus</a>
+        <a href="/edit/<%= user.id_user %>" class="btn btn-primary badge">Edit</a>
+      </td>
     </tr>
   <% } %>
   </tbody>
